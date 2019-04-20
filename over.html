@@ -338,6 +338,19 @@ span.psw {
 
 </style>
 <body>
+<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDcvaOm-u0f0_oelIAJzTrVIKT2kat-wnk",
+    authDomain: "matching-app-97a01.firebaseapp.com",
+    databaseURL: "https://matching-app-97a01.firebaseio.com",
+    projectId: "matching-app-97a01",
+    storageBucket: "matching-app-97a01.appspot.com",
+    messagingSenderId: "193556469572"
+  };
+  firebase.initializeApp(config);
+</script>
 
 <!-- Links (sit on top) -->
 <div class="w3-top">
@@ -361,11 +374,35 @@ span.psw {
     <div class="dropdown-content">
        <a onclick="document.getElementById('id01').style.display='block'" href="#">My Profile</a>
       <a href="#">About US</a>
-      <a href="#">Logout</a>
+      <a onclick="logout()">Logout</a>
     </div>
     </div>
   </div>
 </div>
+<script>
+var uid=null;
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+
+    var user = firebase.auth().currentUser;
+
+  } else {
+    // No user is signed in.
+
+    window.location.replace("page2.html");
+
+  }
+});
+
+
+
+function logout(){
+firebase.auth().signOut();
+
+
+}
+</script>
 <div class="container">
 
   <div class="cour">

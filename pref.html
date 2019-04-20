@@ -3,6 +3,9 @@
 <title>TA Allocation</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -10,9 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Easy Drag and Drop HTML Table Rows With jQuery</title>
     <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css" rel="stylesheet">
+    <!-- <link href="https://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css" rel="stylesheet"> -->
 <style>
 body, html {
   height: 100%;
@@ -199,17 +202,17 @@ span.psw {
 
 }
 </style>
-<script>
+<!--<script>
 $( "table tbody" ).sortable( {
 	update: function( event, ui ) {
     $(this).children().each(function(index) {
 			$(this).find('td').last().html(index + 1)
     });
-  }
+  };
 });
-</script>
+</script>-->
 
-
+</head>
 <body>
 <script>
 
@@ -220,6 +223,15 @@ myrows = mytable.rows;
  var newNode = mytable.rows[0].cloneNode(true);
  mytable.appendChild(newNode);
  mytable.deleteRow(0);
+
+}
+
+function refresh(){
+var table = document.getElementById("re_table");
+
+for (var i = 0, row; row = table.rows[i]; i++) {
+   row.cells[0].innerHTML = i+1;
+}
 
 }
 
@@ -256,7 +268,7 @@ myrows = mytable.rows;
 
     <main role="main" class="container">
 
-     <table class="table table-striped table-hover">
+     <table class="table table-striped table-hover" id='re_table' name='re_table'>
         <thead class="thead-dark">
             <tr>
                 <th>Row</th>
@@ -345,10 +357,13 @@ myrows = mytable.rows;
     <!-- Bootstrap & Core Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
-    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!--<script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
 
     <script type="text/javascript">
       $('tbody').sortable();
+      window.setInterval(function(){
+  	refresh();
+}, 100);
     </script>
 
 

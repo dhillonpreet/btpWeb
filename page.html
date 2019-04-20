@@ -56,7 +56,21 @@ position: absolute;
 </head>
 <body>
 
-<!-- if you want to create login page and register page together in one page ...you have to only chnage his name...that's it...                 -->
+script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDcvaOm-u0f0_oelIAJzTrVIKT2kat-wnk",
+    authDomain: "matching-app-97a01.firebaseapp.com",
+    databaseURL: "https://matching-app-97a01.firebaseio.com",
+    projectId: "matching-app-97a01",
+    storageBucket: "matching-app-97a01.appspot.com",
+    messagingSenderId: "193556469572"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
 <div class="container" style="margin-top: 0px;">
   <div class="row">
     <div class="col-sm-4"> </div>
@@ -85,11 +99,11 @@ position: absolute;
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       
-<form action="#">
+<form  id="contactForm">
 
-  <div class="form-group">
+  <div class="form-group" >
     <label for="UserName">Name</label>
-    <input type="text" class="form-control" id="email">
+    <input type="text" class="form-control" id="name">
   </div>
   
   <div class="form-group">
@@ -98,19 +112,21 @@ position: absolute;
   </div>
 
   <div class="form-group">
-    <label for="pwd">Username:</label>
-    <input type="password" class="form-control" id="pwd">
-  </div>
-
-  <div class="form-group">
     <label for="pwd">Password:</label>
     <input type="password" class="form-control" id="pwd">
   </div>
 
+  <div class="form-group">
+    <label for="phone">Number:</label>
+    <input type="number" class="form-control" id="phone">
+  </div>
+   <div class="form-group">
+    <label for="cour">Course:</label>
+    <input type="text" class="form-control" id="cour">
+  </div>
 
 
   <button type="submit" class="btn btn-default btn-lg">Submit</button>
-  <button type="submit" class=" pull-right btn-link"><a href="www.google.com">Forget password</a></button>
 
 </form>
 <br/>
@@ -119,7 +135,45 @@ position: absolute;
 
 
     </div>
+<script>
+document.getElementById('contactForm').addEventListener('submit', submitForm);
+var messagesRef = firebase.database().ref('messages');
+function submitForm(e){
+  e.preventDefault();
 
+  // Get values
+  var name = getInputVal('name');
+  var course = getInputVal('cour');
+  var email = getInputVal('email');
+  var phone = getInputVal('phone');
+  var pwd = getInputVal('pwd');
+ 
+ // Save message
+saveMessage(name,email,pwd,phone,course);
+  
+}
+
+// Function to get get form values
+function getInputVal(id){
+  return document.getElementById(id).value;
+}
+
+// Save message to firebase
+function saveMessage(name,email,pwd,phone,course){
+  var newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    name: name,
+    pwd:pwd,
+    email:email,
+    phone:phone,
+    course:course
+  });
+}
+
+
+
+
+</script>
     <div id="menu1" class="tab-pane fade">
 
 <form action="#">
