@@ -50,25 +50,47 @@ position: absolute;
 
 
 </style>
+<!---
+<script>
+var name1;
+    var entry;
+    var email1;
+    var phone1;
+    var pwd1;
+ function myFun() {
+  name1 =document.getElementById('name1').value;
+     entry = document.getElementById('entry').value;
+     email1 = document.getElementById('email1').value;
+     phone1 = document.getElementById('phone1').value;
+     pwd1 =document.getElementById('pwd1').value;
+  var x = document.getElementById('name1').value;
+  window.alert(entry);
 
+}
 
-
+</script>
+-->
 </head>
 <body>
 
-script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDcvaOm-u0f0_oelIAJzTrVIKT2kat-wnk",
-    authDomain: "matching-app-97a01.firebaseapp.com",
-    databaseURL: "https://matching-app-97a01.firebaseio.com",
-    projectId: "matching-app-97a01",
-    storageBucket: "matching-app-97a01.appspot.com",
-    messagingSenderId: "193556469572"
-  };
-  firebase.initializeApp(config);
-</script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDcvaOm-u0f0_oelIAJzTrVIKT2kat-wnk",
+        authDomain: "matching-app-97a01.firebaseapp.com",
+        databaseURL: "https://matching-app-97a01.firebaseio.com",
+        projectId: "matching-app-97a01",
+        storageBucket: "matching-app-97a01.appspot.com",
+        messagingSenderId: "193556469572"
+      };
+      firebase.initializeApp(config);
+      var db=firebase.firestore();
+      var user;
+      var uid;
+    </script>
+    
+    
 
 
 <div class="container" style="margin-top: 0px;">
@@ -135,22 +157,60 @@ script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
 
 
     </div>
+    
 <script>
 document.getElementById('contactForm').addEventListener('submit', submitForm);
-var messagesRef = firebase.database().ref('messages');
+
+  var name;
+  var course;
+  var email;
+  var phone;
+  var pwd;
 function submitForm(e){
   e.preventDefault();
 
   // Get values
-  var name = getInputVal('name');
-  var course = getInputVal('cour');
-  var email = getInputVal('email');
-  var phone = getInputVal('phone');
-  var pwd = getInputVal('pwd');
- 
- // Save message
-saveMessage(name,email,pwd,phone,course);
   
+   name =document.getElementById('name').value;
+   course = document.getElementById('cour').value;
+   email = document.getElementById('email').value;
+   phone = document.getElementById('phone').value;
+   pwd =document.getElementById('pwd').value;
+
+   firebase.auth().createUserWithEmailAndPassword(email,pwd).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+}).then(function(){
+  var user = firebase.auth().currentUser;
+  //window.location.replace("over.html");
+window.alert(user.uid+"Gurkaran");
+db.collection(user.uid).doc(course).set({
+cor: [course],
+email :email,
+mobile:phone,
+nop: "1",
+pic: "",
+plist: [],
+role :"Professor",
+table:false,
+username:name,
+whatsapp :phone 
+  
+
+
+
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+
+});
+   
 }
 
 // Function to get get form values
@@ -158,17 +218,7 @@ function getInputVal(id){
   return document.getElementById(id).value;
 }
 
-// Save message to firebase
-function saveMessage(name,email,pwd,phone,course){
-  var newMessageRef = messagesRef.push();
-  newMessageRef.set({
-    name: name,
-    pwd:pwd,
-    email:email,
-    phone:phone,
-    course:course
-  });
-}
+
 
 
 
@@ -176,42 +226,122 @@ function saveMessage(name,email,pwd,phone,course){
 </script>
     <div id="menu1" class="tab-pane fade">
 
-<form action="#">
+<form action="#" id="TaForm">
 
   <div class="form-group">
     <label for="UserName">Name</label>
-    <input type="text" class="form-control" id="email">
+    <input type="text" class="form-control" id="name1">
   </div>
     <div class="form-group">
     <label for="UserName">Entry Number </label>
-    <input type="text" class="form-control" id="email">
+    <input type="text" class="form-control" id="entry">
   </div>
   <div class="form-group">
     <label for="email">Email:</label>
-    <input type="email" class="form-control" id="email">
+    <input type="email" class="form-control" id="email1">
   </div>
 
   <div class="form-group">
-    <label for="pwd">Username:</label>
-    <input type="password" class="form-control" id="pwd">
+    <label for="email">Phone:</label>
+    <input type="number" class="form-control" id="phone1">
   </div>
 
   <div class="form-group">
     <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd">
+    <input type="password" class="form-control" id="pwd1">
   </div>
 
 
 
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" id="TA1"  class="btn btn-default">Submit</button>
 
-  <button type="submit" class=" pull-right btn-link"><a href="www.google.com">Forget password</a></button>
+  
 
 </form>
 <br/>
 <a href="page2.html" class="pull-right btn btn-block btn-success" > Already Register ?   </a>
 
+<script>
+ /*function myFun() {
+  var x = document.getElementById('name1').value;
+  window.alert(x);
+}*/
+  document.getElementById('TaForm').addEventListener('submit', submit1Form);
+  
+  var name1;
+    var entry;
+    var email1;
+    var phone1;
+    var pwd1;
+  function submit1Form(e){
+    e.preventDefault();
+   
+    // Get values
+    
+    name1 =document.getElementById('name1').value;
+     entry = document.getElementById('entry').value;
+     email1 = document.getElementById('email1').value;
+     phone1 = document.getElementById('phone1').value;
+     pwd1 =document.getElementById('pwd1').value;
+     var cour="details";
+    // window.alert(entry);
+     firebase.auth().createUserWithEmailAndPassword(email1,pwd1).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+}).then(function(){
+  //window.location.replace("over.html");
+  var user = firebase.auth().currentUser;
+   //window.location.replace("over.html");
+window.alert(user.uid);
+db.collection(user.uid).doc(cour).set({
+ // cor:["details"],
+ cor: [cour],
+email:email1,
+entryno: entry,
+mobile :phone1,
+nop :"1",
+pic :"",
+plist:[],
+role :"TA",
+table: false,
+username :name1,
+whatsapp :""
 
+
+
+
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+ //window.location.replace("over.html");
+
+});
+    
+  
+ 
+    
+  
+  
+  
+  
+  
+    
+  }
+  
+ 
+  
+  
+  
+  
+  
+  
+  </script>
     
 
 
