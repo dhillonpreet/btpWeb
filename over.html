@@ -335,10 +335,121 @@ span.psw {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.popup-overlay {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+visibility:hidden;
+}
+
+.popup-content {
+  
+  position: relative;
+  padding-left: 500px;
+  margin-bottom: 12px;
+visibility:hidden;
+}
+.popup-overlay.active{
+visibility:visible;
+}
+
+.popup-content.active {
+visibility:visible;
+}
+.button {
+  background-color: #f44336; /* Green */
+  border: none;
+  color: white;
+
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position:absolute; 
+  left:600px; 
+  top:65px;
+}
+.button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.button1 {
+  background-color: #1b0c0b; /* Green */
+  border: none;
+  color: white;
+
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position:absolute; 
+  left:500px; 
+  top:65px;
+}
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#customers{
+	position:absolute;  
+  top:115px;
+}
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color:#2F4F4F ;
+  color: white;
+}
+#re_table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#re_table td, #re_table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#re_table{
+	position:absolute;  
+  top:115px;
+}
+#re_table tr:nth-child(even){background-color: #f2f2f2;}
+
+#re_table tr:hover {background-color: #ddd;}
+
+#retable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color:#2F4F4F ;
+  color: white;
+}
+
 
 </style>
 <body>
 <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+
+
+
+
 <script>
   // Initialize Firebase
   var config = {
@@ -351,7 +462,7 @@ span.psw {
   };
   firebase.initializeApp(config);
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- Links (sit on top) -->
 <div class="w3-top">
   <div class="w3-row w3-padding w3-black">
@@ -359,10 +470,10 @@ span.psw {
       <a href="over.html" class="w3-button w3-block w3-black" data-toggle="tab">Overview</a>
     </div>
     <div class="w3-col s3">
-      <a href="pref.html" class="w3-button w3-block w3-black" data-toggle="tab">Preference</a>
+      <a onclick="open2()" class="w3-button w3-block w3-black" data-toggle="tab">Preference</a>
     </div>
     <div class="w3-col s3">
-      <a href="page4.html" class="w3-button w3-block w3-black" data-toggle="tab">Participants</a>
+      <a  onclick="open1()" class="w3-button w3-block w3-black" data-toggle="tab">Participants</a>
        
     </div>
    
@@ -380,13 +491,523 @@ span.psw {
   </div>
 </div>
 <script>
+ var plist_ch = new Array();
+  /*id = "tablID";
+  function swap_tr() {
+  mytable = document.getElementById(id);
+  myrows = mytable.rows;
+   var newNode = mytable.rows[0].cloneNode(true);
+   mytable.appendChild(newNode);
+   mytable.deleteRow(0);
+  
+  }
+  */
+  function refresh(){
+  var table = document.getElementById("re_table");
+  //console.log(table);
+  for (var i = 1, row; row = table.rows[i]; i++) {
+     row.cells[0].innerHTML = i;
+     console.log(i);
+     console.log(table.rows[i]);
+  }
+  
+  }
+  function showTableData() {
+        //document.getElementById('info').innerHTML = "";
+        var myTab = document.getElementById('re_table');
+
+        // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
+        for (i = 1; i < myTab.rows.length; i++) {
+
+            // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+            var objCells = myTab.rows.item(i).cells;
+            
+            // LOOP THROUGH EACH CELL OF THE CURENT ROW TO READ CELL VALUES.
+            for (var j = 1; j < objCells.length; j++) {
+              if(j=='1'){
+                plist_ch[i]=objCells.item(1).innerHTML;
+              }else {
+              plist_ch[i] =plist_ch[i] +"*details";
+              }
+                console.log(objCells.item(j));
+            }
+            console.log(plist_ch[i]);
+            //info.innerHTML = info.innerHTML + '<br />';     // ADD A BREAK (TAG).
+        }
+    }
+  
+  </script>
+  
+<script>
+function open1(){
+    var x1 = document.getElementById("open1");
+    var x2 = document.getElementById("cour"); 
+    var x3 = document.getElementById("TA1");
+    var x4 = document.getElementById("open2");
+    x1.style.display="block";
+    x4.style.display="none";
+    x3.style.display="none";
+    x2.style.display="none";
+}
+function open3(){
+    var x1 = document.getElementById("open1");
+    var x2 = document.getElementById("cour"); 
+    var x3 = document.getElementById("TA1");
+    var x4 = document.getElementById("open2");
+    x1.style.display="none";
+    x4.style.display="none";
+    x3.style.display="block";
+    x2.style.display="block";
+}
+function open2(){
+    var x1 = document.getElementById("open1");
+    var x4 = document.getElementById("open2");
+    var x2 = document.getElementById("cour");
+    var x3 = document.getElementById("TA1");
+    x4.style.display="block";
+    x1.style.display="none";
+    x2.style.display="none";
+    x3.style.display="none";
+}
+var plist_push= new Array();
+var user=null;
 var uid=null;
+var i=0;
+var email;
+var phone;
+var ro;
+var name;
+var pro_ar;
+var ta_ar;
+var r;
+var sr =1;
+var plist1;
+var u;
+var markup;
+var ind = 0;
+var r_t;
+var plist_ch1nam= new Array();
+var plist_ch1uid = new Array();
+var course;
+ function plist_obj(name,uid) {
+  this.name = name;
+  this.uid=uid;
+}
+
+//var x = document.getElementById("cour");
+var y = document.getElementById("TA");
+var db=firebase.firestore();
+//var u_data;
+window.onload = function() {
+  //u_data.table
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
+      
+     user = firebase.auth().currentUser;
+     db.collection("userdata").get().then(function(querySnapshot) {
+      console.log(querySnapshot.docs[i].data());
+      var userdata= querySnapshot.docs[i].data();
+       pro_ar=userdata.professors;
+       ta_ar=userdata.tas;
+      //var a2 = pro_ar[0];
+      pro_ar.forEach(function(a2){
+       
+      var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+      console.log(d +" " +d1);
+      //var docRef = db.collection(d).doc(d1);
 
-    var user = firebase.auth().currentUser;
+      db.collection(d).doc(d1).get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        var u =doc.data().username;
+       // $("#open1").append(" <table id='customers'><tr><th>Sr.</th><th>Name</th><th>Designation</th></tr>");
+        var markup="<tr><td>"+u+"("+d1+")</td><td>Professor</td></tr>";
+        
+        
+        $("#open1 table tbody").append(markup);
 
+
+
+    } else {
+        // doc.data() will be undefined in this case
+       // console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+    /*sr=sr+1;
+        console.log(sr);
+*/
+      });
+      ta_ar.forEach(function(a2){
+      var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+      console.log(d +" " +d1);
+      //var docRef = db.collection(d).doc(d1);
+
+      db.collection(d).doc("details").get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        var u =doc.data().username;
+        
+       // $("#open1").append(" <table id='customers'><tr><th>Sr.</th><th>Name</th><th>Designation</th></tr>");
+        var markup="<tr><td>"+u+"</td><td>TA</td></tr>";
+        
+        
+        $("#open1 table tbody").append(markup);
+        
+
+
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+
+      });
+
+      
+     
+
+});
+
+
+
+
+     db.collection(user.uid).get().then(function(querySnapshot) {
+      console.log(querySnapshot.docs[i].data());
+    var u_data=querySnapshot.docs[i].data();
+    var rol = u_data.role;
+    var t=u_data.table;
+    plist1 =u_data.plist;
+    console.log(plist1);
+    a=u_data.cor;
+    course=u_data.cor[i];
+    console.log(a);
+    r=u_data.cor[0];
+    document.getElementById("cor_b").innerHTML = u_data.cor[0];
+    email = u_data.email;
+    phone=u_data.mobile;
+    ro=u_data.role;
+    name=u_data.username;
+    window.alert(u_data.cor[i]);
+    a.forEach(function(a1){
+      $("#sub").append("<label class='container'><input type='radio' name='gender' value="+a1+"><p id='r1'>"+a1+"</p></label>");
+      //document.getElementById("r1").innerHTML = a1;
+      
+}); 
+        i=a.indexOf(r);
+          console.log(i);
+          var i1=0;
+          console.log("karean " +t)
+          console.org
+        if(t== true ){
+       
+         
+          console.log(plist1);
+          plist1.forEach(function(a2){
+              
+      var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+      console.log(d +" " +d1);
+      //var docRef = db.collection(d).doc(d1);
+      if(d1=="details"){
+                  r_t="TA";
+              }
+              else {
+                r_t="Professor";
+              }
+              
+      db.collection(d).doc(d1).get().then(function(doc) {
+    if (doc.exists) {
+        //console.log("Document data:", doc.data());
+         u =doc.data().username;
+         
+         var obj = new plist_obj(u,d);
+         console.log(obj.name + "karan " + obj.uid);
+         //plist_ch1[u]=d;
+         ind=ind+1;
+        //console.log(ind +" "+u);
+       // $("#open1").append(" <table id='customers'><tr><th>Sr.</th><th>Name</th><th>Designation</th></tr>");
+       // markup="<tr><td>"+u+"</td><td>TA</td></tr>";
+        
+        
+        $("#open2 table tbody").append("<tr><td>"+ind+"</td><td>"+doc.data().username+"</td><td>"+r_t+"</td></tr>");
+        plist_ch1nam.push(u);
+        plist_ch1uid.push(d);
+        console.log(plist_ch1nam[i]+ " * " + plist_ch1uid[i]);}
+       // plist_ch1.push( { name: u, uid:d } );
+        ///console.log(plist_ch1[i]);
+          //plist_ch1.push(obj.name,obj.uid);
+
+     else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+   
+
+      });
+        }
+        //}
+      //console.log(plist_ch1nam+ " * " + plist_ch1uid);
+      document.getElementById("open2").addEventListener("click",  function InsFire(){
+            console.log("Dhillon" + "*"+ plist_ch+" "+plist_ch1nam+" "+plist_ch1uid);
+          
+          
+                var j1=0;
+              for (i=0; i<plist_ch.length; i++) {
+              var a3 = plist_ch[i];
+              var l=a3.indexOf('*')-1;
+              var d=a3.substring(0,l+1);
+              var d1=a3.substring(l+2,a3.length); // 
+              //console.log(d);
+               // console.log(d);
+            for (j=0; j<plist_ch1nam.length; j++) {
+              var a2=plist_ch1nam[j];
+              //console.log("a2 "+a2);
+              var n = a2.localeCompare(d);
+              //console.log(n);
+              if(d==a2){
+                console.log(i+"*"+n+"*"+a2+"*"+j+"*" +plist_ch1nam[j] + "*"+ plist_ch1uid[j]);
+                  var pf= plist_ch1uid[j]+"*"+d1;
+                  plist_push.push(pf);
+              }
+    
+               // console.log(plist_ch1nam[j]);
+               
+               
+               }
+               //console.log(j1+ " "+ plist_ch1uid[j1]);
+               }
+               console.log(plist_push);
+               console.log(user.uid+"*"+course);
+               db.collection(user.uid).doc(course).update({
+        'plist':plist_push
+        })
+
+
+
+            });
+
+
+
+      if (rol=="TA"){
+        console.log("jatt");
+      var x = document.getElementById("cour");
+      x.style.display="none";
+  
+      }
+      $(".close3").on("click", function(){
+        var text_value = $("#text").val();
+    if(text_value=='') {
+      alert("Enter Some Text In Input Field");
+      }
+      else {
+    alert(text_value +" " + u_data.cor[i]);
+    }
+    //db  .collection(user.uid).doc(text_value).set({'cor':[text_value]});
+
+    a.forEach(function(a1){
+    db.collection(user.uid).doc(a1).update({
+      'cor':firebase.firestore.FieldValue.arrayUnion(text_value)
+
+
+
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+}); });
+a=u_data.cor;
+a.push(text_value);
+console.log(a);
+db.collection(user.uid).doc(text_value).set({
+cor: a,
+email :email,
+mobile:phone,
+nop: "1",
+pic: "",
+plist: [""],
+role :"Professor",
+table:false,
+username:name,
+whatsapp :phone 
+  
+
+
+
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+
+      });
+
+      $(".button").on("click", function(){
+        window.alert(user.uid+" "+rol+" " );
+          if(rol=='TA'){
+          
+          var str = user.uid+"*details";
+
+        db.collection("userdata").doc("table").update({
+        'tas':firebase.firestore.FieldValue.arrayUnion(str)
+        }).then(function() {
+    console.log("Document successfully written!");
+      })
+      .catch(function(error) {
+    console.error("Error writing document: ", error);
+        });
+        db.collection(user.uid).doc("details").update({
+        table:true
+        })
+          pro_ar.forEach(function(a2){
+            var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+
+      db.collection(d).doc(d1).update({
+        'plist':firebase.firestore.FieldValue.arrayUnion(str)
+        })
+        db.collection(user.uid).doc("details").update({
+        'plist':firebase.firestore.FieldValue.arrayUnion(a2)
+        })
+
+          })
+
+
+          }
+          if(rol=='Professor'){
+          
+          var str = user.uid+"*"+u_data.cor[i];
+
+        db.collection("userdata").doc("table").update({
+        'professors':firebase.firestore.FieldValue.arrayUnion(str)
+        }).then(function() {
+    console.log("Document successfully written!");
+      })
+      .catch(function(error) {
+    console.error("Error writing document: ", error);
+        });
+        db.collection(user.uid).doc(u_data.cor[i]).update({
+        table:true
+        })
+          ta_ar.forEach(function(a2){
+            var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+
+      db.collection(d).doc(d1).update({
+        'plist':firebase.firestore.FieldValue.arrayUnion(str)
+        })
+        db.collection(user.uid).doc(u_data.cor[i]).update({
+        'plist':firebase.firestore.FieldValue.arrayUnion(a2)
+        })
+
+          })
+
+
+          }
+
+
+
+
+          }); 
+          $(".button1").on("click", function(){
+        window.alert(user.uid+" "+rol+" " );
+          if(rol=='TA'){
+          
+          var str = user.uid+"*details";
+
+        db.collection("userdata").doc("table").update({
+        'tas':firebase.firestore.FieldValue.arrayRemove(str)
+        }).then(function() {
+    console.log("Document successfully written!");
+      })
+      .catch(function(error) {
+    console.error("Error writing document: ", error);
+        });
+        db.collection(user.uid).doc("details").update({
+        table:false
+        })
+          pro_ar.forEach(function(a2){
+            var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+
+      db.collection(d).doc(d1).update({
+        'plist':firebase.firestore.FieldValue.arrayRemove(str)
+        })
+        db.collection(user.uid).doc("details").update({
+        'plist':firebase.firestore.FieldValue.arrayRemove(a2)
+        })
+
+          })
+
+
+          }
+          if(rol=='Professor'){
+          
+          var str = user.uid+"*"+u_data.cor[i];
+
+        db.collection("userdata").doc("table").update({
+        'professors':firebase.firestore.FieldValue.arrayRemove(str)
+        }).then(function() {
+    console.log("Document successfully written!");
+      })
+      .catch(function(error) {
+    console.error("Error writing document: ", error);
+        });
+        db.collection(user.uid).doc(u_data.cor[i]).update({
+        table:false
+        })
+          ta_ar.forEach(function(a2){
+            var l=a2.indexOf('*')-1;
+      var d=a2.substring(0,l+1); // uid
+      var d1=a2.substring(l+2,a2.length); // course
+
+      db.collection(d).doc(d1).update({
+        'plist':firebase.firestore.FieldValue.arrayRemove(str)
+        })
+        db.collection(user.uid).doc(u_data.cor[i]).update({
+        'plist':firebase.firestore.FieldValue.arrayRemove(a2)
+        })
+
+          })
+
+
+          }
+
+
+
+
+          }); 
+
+
+
+
+
+
+});
+
+
+
+   // window.alert(user.uid);
   } else {
     // No user is signed in.
 
@@ -394,18 +1015,21 @@ firebase.auth().onAuthStateChanged(function(user) {
 
   }
 });
-
-
+}
 
 function logout(){
 firebase.auth().signOut();
 
 
 }
+
+
+
+
 </script>
 <div class="container">
 
-  <div class="cour">
+  <div id="cour" class="cour">
       <p class="cour1">Select number of TA's:
       <select >
   <option value="volvo">One</option>
@@ -417,40 +1041,106 @@ firebase.auth().signOut();
 <br>
 <p class="cour1">Switch Courses : <p>
 <!--<button class="bcour" onclick="document.getElementById('id1').style.display='block'" style="width:auto;">Login</button>-->
-<button id="myBtn1" class="bcour">CSL101</button>
+<button id="myBtn1" class="bcour"><p id="cor_b">CSL101</p></button>
 
 <!-- The Modal -->
 <div id="myModal1" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div id="sub" class="modal-content">
     <span class="close1">&times;</span>
     <button class="bcour1">Add Courses</button>
-  
-<label class="container2">One
-  <input type="checkbox" checked="checked">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Two
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Three
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-<label class="container2">Four
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-
+    <!----re_table
+    <input type="radio" nare_tableme="gender" value="male"><p id="r1">One</p><br>
+    <input type="radio" nare_tableme="gender" value="female"> Female<br>
+    <input type="radio" nare_tableme="gender" value="other"> Other<br>  -->
+    <p><input type="button" onclick="func()" value="Select"></p>
 
   </div>
+  <div class="popup-overlay">
+      <!--Creates the popup content-->
+       <div class="popup-content">
+          <h2 >Pop-Up</h2>
+          Add Course <input type="text" id="text" name="name" value="" /> </br>
 
+         <!--popup's close button-->
+         <button class="close3" style="position:absolute; left:600px; top:105px;" >Add</button>
+          <button class="close2"  style="position:absolute; left:680px; top:105px;" >Close</button> 
+      </div>
+         
+      </div>
+      </div>
 </div>
+  
+
+<script>
+$(".bcour1").on("click", function(){
+$(".popup, .popup-content").addClass("active");
+});
+$(".close2, .popup").on("click", function(){
+$(".popup, .popup-content").removeClass("active");
+});
+/*function add()
+{
+  var text_value = $("#text").val();
+if(text_value=='') {
+alert("Enter Some Text In Input Field");
+}else{
+alert(text_value  );
+}
+}*/
+
+</script>
 
 
+<script>
+  function func(){
+     r = $("input[name='gender']:checked").val();
+    document.getElementById("cor_b").innerHTML = r;
+    console.log(r);
+  }
+var a='';
 
+</script>
+
+<div id="open1"class="container 2" style="display:none;">
+  <button class="button">Join</button>
+  <button class="button1">Leave</button>
+  <table id="customers">
+  <thead><tr>
+  	
+    <th>Name</th>
+    <th>Designation</th>
+  </tr>
+</thead>
+
+<tbody>
+  <!---<tr>
+    <td>1</td>
+    <td>Sudarshan</td>
+    <td>Professor</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Amit</td>
+    <td>TA</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Saswata</td>
+    <td>Professor</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Ravikiran</td>
+    <td>TA</td>
+  </tr>-->
+</tbody>
+
+  
+    
+  </table>
+  </div>
 
 
 
@@ -517,7 +1207,7 @@ function closeForm() {
     <a href="#"><i class="fa fa-facebook"></i></a> 
   </div>
   <p><button>Contact</button></p>
-      </label>
+      
     </div>
   </form>
 </div>
@@ -534,6 +1224,107 @@ window.onclick = function(event) {
 }
 
 </script>
+
+<div id="TA1">
+
+<h3 style="text-align: center;">Matching will be done after</h3>
+<h1 style="text-align: center;">May 15,2019</h1>
+
+
+</div>
+
+
+<div id="open2"class="container 2" style="display:none;">
+  
+  <table class="customers" id='re_table' name='re_table'>
+  <thead><tr>
+  	<th>Row</th>
+    <th>Name</th>
+    <th>Designation</th>
+  </tr>
+</thead>
+
+<tbody>
+  <!---<tr>
+    <td>Sudarshan</td>
+    <td>Professor</td>
+  </tr>
+  
+    
+ 
+  <tr>
+    <td>4</td>
+    <td>Ravikiran</td>
+    <td>TA</td>
+  </tr>-->
+</tbody>
+
+  
+    
+  </table>
+  </div>
+
+
+
+
+
+ <!-- Bootstrap & Core Scripts -->
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+ <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 
+ <!--<script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
+
+ <script type="text/javascript">
+ function refresh(){
+  var table = document.getElementById("re_table");
+  //console.log(table);
+  for (var i = 1, row; row = table.rows[i]; i++) {
+     row.cells[0].innerHTML = i;
+     console.log(i);
+     console.log(table.rows[i]);
+  }
+  
+  }
+  $('#open2 tbody').sortable();
+  //$('#open2 tbody').on( "click",refresh());
+  document.getElementById("open2").addEventListener("click",function refresh(){
+  var table = document.getElementById("re_table");
+  //console.log(table);
+  for (var i = 1, row; row = table.rows[i]; i++) {
+     row.cells[0].innerHTML = i;
+     console.log(i);
+     console.log(table.rows[i]);
+  }
+  
+  } );
+
+  document.getElementById("open2").addEventListener("click", function showTableData() {
+        //document.getElementById('info').innerHTML = "";
+        var myTab = document.getElementById('re_table');
+
+        // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
+        for (i = 1; i < myTab.rows.length; i++) {
+
+            // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+            var objCells = myTab.rows.item(i).cells;
+            
+            // LOOP THROUGH EACH CELL OF THE CURENT ROW TO READ CELL VALUES.
+            for (var j = 1; j < objCells.length; j++) {
+              if(j=='1'){
+                plist_ch[i-1]=objCells.item(1).innerHTML;
+              } else if (j>1) {
+              plist_ch[i-1] =plist_ch[i-1] +"*details";
+              }
+                console.log(objCells.item(j));
+            }
+            
+            //info.innerHTML = info.innerHTML + '<br />';     // ADD A BREAK (TAG).
+        }
+        console.log(plist_ch);
+    });
+
+  
+ </script>
+
 
 </body>
 </html>
